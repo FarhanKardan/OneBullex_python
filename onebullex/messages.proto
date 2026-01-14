@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package onebullex;
+
+message BaseMessage {
+  int64 action = 1;
+  bytes data = 2;
+  int64 time = 3;
+}
+
+message SendSubscribeInfo {
+  string symbol = 1;
+  string platform = 2;
+  string period = 3;
+}
+
+message SendSubscribeDepth {
+  string symbol = 1;
+  string platform = 2;
+}
+
+message SendSubscribeTicker {
+  string platform = 1;
+}
+
+message KlineInfo {
+  double open = 1;
+  double close = 2;
+  double high = 3;
+  double low = 4;
+  double volume = 5;
+  int64 startTime = 6;
+  int64 endTime = 7;
+}
+
+message RecKlineData {
+  int64 time = 1;
+  repeated KlineInfo kline_infos = 2;
+}
+
+message DepthInfo {
+  double volume = 1;
+  double price = 2;
+}
+
+message RecDepthInfo {
+  repeated DepthInfo buy = 1;
+  repeated DepthInfo sell = 2;
+}
