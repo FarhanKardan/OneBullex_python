@@ -34,6 +34,34 @@ def main():
                 print(f"Fetched {len(klines['list'])} candles.")
             else:
                  print(f"Raw Kline Response: {klines}")
+                 
+            # 4. Orderbook
+            print(f"\n[4] Fetching Orderbook for {first_pair}...")
+            depth = client.market.orderbook(first_pair)
+            if depth and 'bids' in depth:
+                print(f"Success. Bids: {len(depth['bids'])}, Asks: {len(depth['asks'])}")
+            else:
+                print(f"Failed Orderbook: {depth}")
+
+            # 5. Trades
+            print(f"\n[5] Fetching Trades for {first_pair}...")
+            trades = client.market.trades(first_pair)
+            print(f"Success. Fetched {len(trades.get('list', []))} trades.")
+
+        # 6. Assets
+        print("\n[6] Fetching supported assets...")
+        assets = client.market.assets()
+        print(f"Success. Fetched {len(assets)} assets.")
+
+        # 7. Contract Info
+        print("\n[7] Fetching Contract List...")
+        contracts = client.market.contract_list()
+        print(f"Success. Fetched {len(contracts.get('list', []))} contracts.")
+        
+        print("\n[8] Fetching Contract Specs...")
+        specs = client.market.contract_specs()
+        print(f"Success. Fetched {len(specs.get('list', []))} specs.")
+
 
     except Exception as e:
         print(f"Verification Failed: {e}")

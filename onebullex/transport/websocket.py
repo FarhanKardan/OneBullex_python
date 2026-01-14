@@ -3,11 +3,11 @@ import time
 import websocket
 import logging
 from typing import Dict, Callable, Any
-from . import constants
+from ..config import PROD_CONFIG
 from . import messages_pb2 as pb
 
 class OneBullExWebSocket:
-    def __init__(self, url: str = constants.PROD_WS_URL):
+    def __init__(self, url: str = PROD_CONFIG.ws_url):
         self.url = url
         self.ws = None
         self.wst = None

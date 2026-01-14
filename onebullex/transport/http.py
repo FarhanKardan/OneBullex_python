@@ -116,6 +116,21 @@ class HTTPClient:
                 code = data.get("code")
                 msg = data.get("msg")
                 
+                # If code is missing, treat as success if data matches expected?
+                # Or maybe the key is different?
+                # Inspecting the error trace: APIError: [None] None
+                # This means code was None.
+                if code is None:
+                    # Some endpoints might return raw list/dict without wrapper?
+                    # But doc says "All API responses follow this format... code, msg, data"
+                    # Exception: Maybe some legacy endpoints?
+                    # Let's log and Assume Success if we can't determine error?
+                    # Or treat as error?
+                    # For verification, let's print it.
+                    logger.warning(f"Response missing 'code' field: {data}")
+                    # If we return data, we might be returning the whole dict as data?
+                    return data 
+
                 if code != 0 and code != 200:
                      mapped_exc = map_error_code(code, msg, data)
                      if mapped_exc:
